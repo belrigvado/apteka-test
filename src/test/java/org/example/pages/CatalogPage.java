@@ -17,8 +17,12 @@ public class CatalogPage extends ItemsPage {
 		List<WebElement> elements = driver.findElements(breadCrumbsBy);
 		List<String> result = new ArrayList<>();
 		for(WebElement element : elements) {
-			WebElement link = element.findElement(By.tagName("a"));
-			result.add(link.getAttribute("title"));
+			List<WebElement> links = element.findElements(By.tagName("span"));
+			for(WebElement link : links) {
+				if("name".equals(link.getAttribute("itemprop"))) {
+					result.add(link.getText());
+				}
+			}
 		}
 		return result;
 	}
